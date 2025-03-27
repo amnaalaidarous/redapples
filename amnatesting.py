@@ -37,7 +37,7 @@ service_request1 = GuestServiceRequest(701, guest1, "Private Desert Safari Tour"
 service_request2 = GuestServiceRequest(702, guest2, "Late Check-out for Friday Prayer", "Approved")
 
 # Welcome statement
-print("Welcome to the UAE Luxury Hotel Management System!\n")
+print("Welcome to the Hotel Management System!\n")
 
 # Printing the first person's related objects
 print("---- First Person/Guest Details ----")

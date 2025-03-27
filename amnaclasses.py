@@ -1,3 +1,4 @@
+
 # The Person class represents a person with essential details.
 class Person:
     def __init__(self, person_id, name, age, contact_info, role):
@@ -162,13 +163,18 @@ class Room:
 
 # The Booking class represents a booking made by a guest in a room.
 class Booking:
-    def __init__(self, booking_id, guest, room, check_in_date, check_out_date, total_amount):
+    def __init__(self, booking_id, guest, room, check_in_date, check_out_date, confirm_notification, access_invoice, cancel_booking, update_availability, cancel_notice, total_amount):
         # Initializes booking details
         self.booking_id = booking_id
         self.guest = guest
         self.room = room
         self.check_in_date = check_in_date
         self.check_out_date = check_out_date
+        self.confirm_notification = confirm_notification
+        self.access_invoice = access_invoice
+        self.cancel_booking = cancel_booking
+        self.update_availability = update_availability
+        self.cancel_notice = cancel_notice
         self.total_amount = total_amount
 
     # Setter and getter methods for booking attributes
@@ -202,6 +208,36 @@ class Booking:
     def getCheckOutDate(self):
         return self.check_out_date
 
+    def setConfirmNotification(self, confirm_notification):
+        self.confirm_notification = confirm_notification
+
+    def getConfirmNotification(self):
+        return self.confirm_notification
+
+    def setAccessInvoice(self, access_invoice):
+        self.access_invoice = access_invoice
+
+    def getAccessInvoice(self):
+        return self.access_invoice
+
+    def setBookingCancellation(self, cancel_booking):
+        self.cancel_booking = cancel_booking
+
+    def getBookingCancellation(self):
+        return self.cancel_booking
+
+    def setUpdateAvailability(self, update_availability):
+        self.update_availability = update_availability
+
+    def getUpdateAvailability(self):
+        return self.update_availability
+
+    def setCancelNotice(self, cancel_notice):
+        self.cancel_notice = cancel_notice
+
+    def getCancelNotice(self):
+        return self.cancel_notice
+
     # Calculate the total booking amount
     def calculateTotalAmount(self):
         return self.total_amount
@@ -209,16 +245,21 @@ class Booking:
     # String representation of the Booking object
     def __str__(self):
         return (f"Booking[ID={self.booking_id}, Guest={self.guest.name}, Room={self.room.room_number}, "
-                f"Check-in={self.check_in_date}, Check-out={self.check_out_date}, Total={self.total_amount}]")
+                f"Check-in={self.check_in_date}, Check-out={self.check_out_date}, Confirm Notification={self.confirm_notification}, "
+                f"Access Invoice={self.access_invoice}, Cancel Booking={self.cancel_booking}, Update Availability={self.update_availability}, "
+                f"Cancel Notice={self.cancel_notice}, Total={self.total_amount}]")
+
 
 # The Payment class represents a payment for a booking.
 class Payment:
-    def __init__(self, payment_id, booking, amount, payment_method, status):
+    def __init__(self, payment_id, booking, amount, charges_and_discounts, payment_method, invoice_generation, status):
         # Initializes payment details
         self.payment_id = payment_id
         self.booking = booking
         self.amount = amount
+        self.charges_and_discounts = charges_and_discounts
         self.payment_method = payment_method
+        self.invoice_generation = invoice_generation
         self.status = status
 
     # Setter and getter methods for payment attributes
@@ -240,6 +281,12 @@ class Payment:
     def getAmount(self):
         return self.amount
 
+    def setChargesAndDiscounts(self, charges_and_discounts):
+        self.charges_and_discounts = charges_and_discounts
+
+    def getChargesAndDiscounts(self):
+        return self.charges_and_discounts
+
     def setPaymentMethod(self, method):
         self.payment_method = method
 
@@ -252,6 +299,12 @@ class Payment:
     def getStatus(self):
         return self.status
 
+    def setInvoiceGeneration(self, invoice_generation):
+        self.invoice_generation = invoice_generation
+
+    def getInvoiceGeneration(self):
+        return self.invoice_generation
+
     # Method to process payment status
     def processPayment(self):
         self.status = "Processed"
@@ -259,7 +312,9 @@ class Payment:
     # String representation of the Payment object
     def __str__(self):
         return (f"Payment[ID={self.payment_id}, BookingID={self.booking.booking_id}, Amount={self.amount}, "
-                f"Method={self.payment_method}, Status={self.status}]")
+                f"ChargesAndDiscounts={self.charges_and_discounts}, Method={self.payment_method}, "
+                f"InvoiceGeneration={self.invoice_generation}, Status={self.status}]")
+
 
 # The LoyaltyProgram class represents the loyalty program a guest can participate in.
 class LoyaltyProgram:

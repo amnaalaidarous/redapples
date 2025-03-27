@@ -117,16 +117,37 @@ class Hotel:
 # The Room class represents a room in a hotel with amenities, price, and availability status.
 class Room:
     def __init__(self, room_number, room_type, amenities, price_per_night, availability_status):
-        # Initializes room details
-        self.room_number = room_number
-        self.room_type = room_type
-        self.amenities = amenities
-        self.price_per_night = price_per_night
-        self.availability_status = availability_status
+        try:
+            # Initialize room details with validation
+            if not isinstance(room_number, int) or room_number <= 0:
+                raise ValueError("Room number must be a positive integer.")
+            if not isinstance(price_per_night, (int, float)) or price_per_night <= 0:
+                raise ValueError("Price per night must be a positive number.")
+            if not isinstance(availability_status, bool):
+                raise ValueError("Availability status must be a boolean value.")
+
+            self.room_number = room_number
+            self.room_type = room_type
+            self.amenities = amenities
+            self.price_per_night = price_per_night
+            self.availability_status = availability_status
+
+        except ValueError as e:
+            print(f"Error in room initialization: {e}")
+            self.room_number = None
+            self.room_type = None
+            self.amenities = None
+            self.price_per_night = None
+            self.availability_status = None
 
     # Setter and getter methods for room attributes
     def setRoomNumber(self, room_number):
-        self.room_number = room_number
+        try:
+            if not isinstance(room_number, int) or room_number <= 0:
+                raise ValueError("Room number must be a positive integer.")
+            self.room_number = room_number
+        except ValueError as e:
+            print(f"Error: {e}")
 
     def getRoomNumber(self):
         return self.room_number
@@ -144,7 +165,12 @@ class Room:
         return self.amenities
 
     def setPricePerNight(self, price):
-        self.price_per_night = price
+        try:
+            if not isinstance(price, (int, float)) or price <= 0:
+                raise ValueError("Price per night must be a positive number.")
+            self.price_per_night = price
+        except ValueError as e:
+            print(f"Error: {e}")
 
     def getPricePerNight(self):
         return self.price_per_night
@@ -153,13 +179,19 @@ class Room:
         return self.availability_status
 
     def setAvailability(self, status):
-        self.availability_status = status
+        try:
+            if not isinstance(status, bool):
+                raise ValueError("Availability status must be a boolean value.")
+            self.availability_status = status
+        except ValueError as e:
+            print(f"Error: {e}")
 
     # String representation of the Room object
     def __str__(self):
         return (f"Room[Number={self.room_number}, Type={self.room_type}, "
                 f"Amenities={self.amenities}, Price={self.price_per_night}, "
                 f"Availability Status={self.availability_status}]")
+
 
 # The Booking class represents a booking made by a guest in a room.
 class Booking:
@@ -367,17 +399,45 @@ class LoyaltyProgram:
 # The FeedbackReview class represents a guest's feedback and review for a hotel stay.
 class FeedbackReview:
     def __init__(self, review_id, guest, hotel, rating, comments, review_date):
-        # Initializes the feedback review details
-        self.review_id = review_id
-        self.guest = guest
-        self.hotel = hotel
-        self.rating = rating
-        self.comments = comments
-        self.review_date = review_date
+        try:
+            # Initialize the feedback review details with validation
+            if not isinstance(review_id, int) or review_id <= 0:
+                raise ValueError("Review ID must be a positive integer.")
+            if not isinstance(rating, (int, float)) or not (1 <= rating <= 5):
+                raise ValueError("Rating must be a number between 1 and 5.")
+            if not isinstance(comments, str) or len(comments.strip()) == 0:
+                raise ValueError("Comments must be a non-empty string.")
+            # Simple date validation (assuming date is a string in the format 'YYYY-MM-DD')
+            from datetime import datetime
+            try:
+                datetime.strptime(review_date, '%Y-%m-%d')
+            except ValueError:
+                raise ValueError("Review date must be in 'YYYY-MM-DD' format.")
+
+            self.review_id = review_id
+            self.guest = guest
+            self.hotel = hotel
+            self.rating = rating
+            self.comments = comments
+            self.review_date = review_date
+
+        except ValueError as e:
+            print(f"Error in feedback review initialization: {e}")
+            self.review_id = None
+            self.guest = None
+            self.hotel = None
+            self.rating = None
+            self.comments = None
+            self.review_date = None
 
     # Setter and getter methods for the review attributes
     def setReviewID(self, review_id):
-        self.review_id = review_id
+        try:
+            if not isinstance(review_id, int) or review_id <= 0:
+                raise ValueError("Review ID must be a positive integer.")
+            self.review_id = review_id
+        except ValueError as e:
+            print(f"Error: {e}")
 
     def getReviewID(self):
         return self.review_id
@@ -395,19 +455,38 @@ class FeedbackReview:
         return self.hotel
 
     def setRating(self, rating):
-        self.rating = rating
+        try:
+            if not isinstance(rating, (int, float)) or not (1 <= rating <= 5):
+                raise ValueError("Rating must be a number between 1 and 5.")
+            self.rating = rating
+        except ValueError as e:
+            print(f"Error: {e}")
 
     def getRating(self):
         return self.rating
 
     def setComments(self, comments):
-        self.comments = comments
+        try:
+            if not isinstance(comments, str) or len(comments.strip()) == 0:
+                raise ValueError("Comments must be a non-empty string.")
+            self.comments = comments
+        except ValueError as e:
+            print(f"Error: {e}")
 
     def getComments(self):
         return self.comments
 
     def setReviewDate(self, review_date):
-        self.review_date = review_date
+        try:
+            from datetime import datetime
+            # Simple date validation (assuming date is a string in the format 'YYYY-MM-DD')
+            try:
+                datetime.strptime(review_date, '%Y-%m-%d')
+            except ValueError:
+                raise ValueError("Review date must be in 'YYYY-MM-DD' format.")
+            self.review_date = review_date
+        except ValueError as e:
+            print(f"Error: {e}")
 
     def getReviewDate(self):
         return self.review_date
